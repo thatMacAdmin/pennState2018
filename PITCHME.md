@@ -5,7 +5,7 @@ theme: night
 ---
 ### Getting your PROD AD Schema
 <div style="text-align: left">
-- We need this in order to compare it with your current AD LDS schema so we can get the diffs.<br />
+- We need this in order to compare it with your current AD LDS schema so we can get the diffs.<br /><br />
 - Replace DC=myADServer01,DC=io with the distinguished name of your AD server root.<br />
 </div>
 <br />
@@ -16,27 +16,31 @@ ldifde -f myProdADSchema.ldif -d CN=Schema,CN=Configuration,DC=macbytes,DC=io
 
 ---
 ### Now Get Your Diffs:
-Open
-```
+Open:
+```shell
 C:\WINDOWS\ADAM\ADSchemaAnalyzer.exe
 ```
 
-Now we will load up the target schema that we extracted
+---
+Now we will load up the target schema that we extracted<br />
 File -> Load Target Schema -> Load LDIF
 
-Next we will
+---
+Next we will<br />
 File -> Load Base Schema -> Enter your AD LDS Server Information
 
-Now setup for export
+---
+Now setup for export<br />
 Schema -> Mark all non-present elements as included
 
-Finally
+---
+Finally<br />
 File -> Create LDIF File
 
 ---
 ### Lets import the diffs:
 
-```
+```shell
 ldifde -i -f myMissingElements.ldf -c dc=X DC=jss,DC=macbytes,DC=io
 ```
 
