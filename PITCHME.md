@@ -22,7 +22,7 @@ C:\WINDOWS\ADAM\ADSchemaAnalyzer.exe
 ```
 
 ---
-Now we will load up the target schema that we extracted<br />
+### Now we will load up the target schema that we extracted<br />
 ----
 ```text
 File -> Load Target Schema -> Load LDIF
