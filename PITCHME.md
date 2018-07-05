@@ -1,122 +1,39 @@
 ---?color=#FF9B52
-### Configuration for AD LDS
-#### Code Examples
+### Get Schema Diffs from AD to AD LDS
 
----?color=#E864AB
-### Tell AD LDS About your Source AD:
+---
+### Getting your PROD AD Schema
 
-```xml
-<description>MacBytes User Sync</description>
-<security-mode>object</security-mode>
-<source-ad-name>macbytes.io</source-ad-name>
-<source-ad-partition>dc=macbytes,dc=io</source-ad-partition>
-<source-ad-account>thatmacadmin</source-ad-account>
-<account-domain>macbytes</account-domain>
-<target-dn>dc=jss,dc=macbytes,dc=io</target-dn>
+- We need this in order to compare it with your current AD LDS schema so we can get the diffs.
+- Replace DC=myADServer01,DC=io with the distinguished name of your AD server root.
+```
+ldifde -f myProdADSchema.ldif -d CN=Schema,CN=Configuration,DC=macbytes,DC=io
 ```
 
----?color=#74992e
-### Tell ADAM What to Sync:
-
-```xml
-<base-dn>ou=Users,ou=Users and Groups,dc=macbytes,dc=io</base-dn>
-<base-dn>ou=Application Groups,ou=Users and Groups,dc=macbytes,dc=io</base-dn>
-<base-dn>ou=App Grps,ou=Unix,dc=macbytes,dc=io</base-dn>
+---
+### Now Get Your Diffs:
+Open
+```
+C:\WINDOWS\ADAM\ADSchemaAnalyzer.exe
 ```
 
----?color=#1598FF
-### Set Object Filter:
+Now we will load up the target schema that we extracted
+- File -> Load Target Schema -> Load LDIF
 
-```xml
-<object-filter>(&#124;(objectCategory=Person)(objectCategory=OrganizationalUnit)(objectCategory=Group))</object-filter>
+Next we will
+- File -> Load Base Schema -> Enter your AD LDS Server Information
+
+Now setup for export
+- Schema -> Mark all non-present elements as included
+
+Finally
+- File -> Create LDIF File
+
+---
+### Lets import the diffs:
+
+```
+ldifde -i -f myMissingElements.ldf -c dc=X DC=jss,DC=macbytes,DC=io
 ```
 
----?color=#FF543F
-### Configure Sync Attributes
-```xml
-<attributes>
-    <include>userPrincipalName</include>
-    <include>title</include>
-    <include>sAMAccountName</include>
-    <include>uid</include>
-    <include>cn</include>
-    <include>sn</include>
-    <include>streetAddress</include>
-    <include>telephoneNumber</include>
-    <include>givenName</include>
-    <include>member</include>
-    <exclude></exclude>
-</attributes>
-```
-
----?color=#FF9B52
-### Get User-Object-Proxy Working:
-
-```xml
-<user-proxy>
-    <source-object-class>user</source-object-class>
-    <target-object-class>userProxyFull</target-object-class>
-</user-proxy>
-```
-
----?color=#E864AB
-### Lets Put it all Together:
-
-```xml
-<?xml version="1.0"?>
-<doc>
- <configuration>
-  <description>MacBytes User Sync</description>
-  <security-mode>object</security-mode>
-  <source-ad-name>macbytes.io</source-ad-name>
-  <source-ad-partition>dc=macbytes,dc=io</source-ad-partition>
-  <source-ad-account>thatmacadmin</source-ad-account>
-  <account-domain>macbytes</account-domain>
-  <target-dn>dc=jss,dc=macbytes,dc=io</target-dn>
-  <query>
-   <base-dn>ou=Users,ou=Users and Groups,dc=macbytes,dc=io</base-dn>
-   <base-dn>ou=Application Groups,ou=Users and Groups,dc=macbytes,dc=io</base-dn>
-   <base-dn>ou=App Grps,ou=Unix,dc=macbytes,dc=io</base-dn>
-   <object-filter>(&#124;(objectCategory=Person)(objectCategory=OrganizationalUnit)(objectCategory=Group))</object-filter>
-   <attributes>
-    <include>userPrincipalName</include>
-    <include>title</include>
-    <include>sAMAccountName</include>
-    <include>uid</include>
-    <include>cn</include>
-    <include>sn</include>
-    <include>streetAddress</include>
-    <include>telephoneNumber</include>
-    <include>givenName</include>
-    <include>member</include>
-    <exclude></exclude>
-   </attributes>
-  </query>
-  <schedule>
-   <aging>
-    <frequency>0</frequency>
-    <num-objects>0</num-objects>
-   </aging>
-   <schtasks-cmd></schtasks-cmd>
-  </schedule>
-  <user-proxy>
-    <source-object-class>user</source-object-class>
-    <target-object-class>userProxyFull</target-object-class>
-  </user-proxy>
- </configuration>
- <synchronizer-state>
-  <dirsync-cookie></dirsync-cookie>
-  <status></status>
-  <authoritative-adam-instance></authoritative-adam-instance>
-  <configuration-file-guid></configuration-file-guid>
-  <last-sync-attempt-time></last-sync-attempt-time>
-  <last-sync-success-time></last-sync-success-time>
-  <last-sync-error-time></last-sync-error-time>
-  <last-sync-error-string></last-sync-error-string>
-  <consecutive-sync-failures></consecutive-sync-failures>
-  <user-credentials></user-credentials>
-  <runs-since-last-object-update></runs-since-last-object-update>
-  <runs-since-last-full-sync></runs-since-last-full-sync>
- </synchronizer-state>
-</doc>
-```
+---
