@@ -2,7 +2,7 @@
 ### Configuration for AD LDS
 #### Code Examples
 
----
+---?color=#E864AB
 ### Tell AD LDS About your Source AD:
 
 ```xml
@@ -15,7 +15,7 @@
 <target-dn>dc=jss,dc=macbytes,dc=io</target-dn>
 ```
 
----
+---?color=#74992e
 ### Tell ADAM What to Sync:
 
 ```xml
@@ -24,14 +24,14 @@
 <base-dn>ou=App Grps,ou=Unix,dc=macbytes,dc=io</base-dn>
 ```
 
----
+---?color=#1598FF
 ### Set Object Filter:
 
 ```xml
 <object-filter>(&#124;(objectCategory=Person)(objectCategory=OrganizationalUnit)(objectCategory=Group))</object-filter>
 ```
 
----
+---?color=#FF543F
 ### Configure Sync Attributes
 ```xml
 <attributes>
@@ -49,7 +49,7 @@
 </attributes>
 ```
 
----
+---?color=#FF9B52
 ### Get User-Object-Proxy Working:
 
 ```xml
@@ -59,7 +59,7 @@
 </user-proxy>
 ```
 
----
+---?color=#E864AB
 ### Lets Put it all Together:
 
 ```xml
