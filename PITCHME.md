@@ -4,8 +4,9 @@
 ---
 ### Getting your PROD AD Schema
 
-- We need this in order to compare it with your current AD LDS schema so we can get the diffs.
-- Replace DC=myADServer01,DC=io with the distinguished name of your AD server root.
+We need this in order to compare it with your current AD LDS schema so we can get the diffs.
+Replace DC=myADServer01,DC=io with the distinguished name of your AD server root.
+
 ```
 ldifde -f myProdADSchema.ldif -d CN=Schema,CN=Configuration,DC=macbytes,DC=io
 ```
