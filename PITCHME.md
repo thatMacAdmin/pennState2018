@@ -1,8 +1,8 @@
----?color=#74992e
+---?color=#FF9B52
 ### Configuration for AD LDS
 #### Code Examples
 
-----
+---
 ### Tell AD LDS About your Source AD:
 
 ```xml
