@@ -3,7 +3,7 @@
 
 ---
 ### Getting your PROD AD Schema
-<div style="text-align: left">
+<div style="text-align: left" style="font-size: 16px">
 We need this in order to compare it with your current AD LDS schema so we can get the diffs.<br/>
 Replace DC=myADServer01,DC=io with the distinguished name of your AD server root.<br/>
 </div>
