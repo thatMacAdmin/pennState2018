@@ -1,3 +1,4 @@
+---?color=#74992e
 ### Configuration for AD LDS
 #### Code Examples
 
@@ -15,7 +16,7 @@
 ```
 
 ---
-### Setup your OUs to Sync:
+### Tell ADAM What to Sync:
 
 ```xml
 <base-dn>ou=Users,ou=Users and Groups,dc=macbytes,dc=io</base-dn>
@@ -56,6 +57,7 @@
     <source-object-class>user</source-object-class>
     <target-object-class>userProxyFull</target-object-class>
 </user-proxy>
+```
 
 ---
 ### Lets Put it all Together:
