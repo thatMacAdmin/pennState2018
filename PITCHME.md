@@ -5,7 +5,7 @@
 ### But first lets install the schema
 ----
 ```shell
-C:\Windows\adamsync.exe /install localhost:389 C:\Some\XML\Location\customAdamsync.xml
+C:\Windows\ADAM\adamsync.exe /install localhost:389 C:\Some\XML\Location\customAdamsync.xml
 ```
 
 ---
