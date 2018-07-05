@@ -7,10 +7,9 @@
 We need this in order to compare it with your current AD LDS schema so we can get the diffs.<br/>
 Replace DC=myADServer01,DC=io with the distinguished name of your AD server root.<br/>
 </div>
-```
 
+```shell
 ldifde -f myProdADSchema.ldif -d CN=Schema,CN=Configuration,DC=macbytes,DC=io
-
 ```
 
 ---
