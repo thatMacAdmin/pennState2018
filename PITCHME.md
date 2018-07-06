@@ -1,23 +1,32 @@
 ---
-### Getting AD Attributes from NoMAD
+### LDAP Search with Kerberos!
 
 ---
-### We need to add this to our mobileconfig
+### This command is pretty straight forward:
 ----
-```xml
-<key>CustomLDAPAttributes</key>
-<array>
-    <string>attribute01</string>
-    <string>attribute02</string>
-</array>
-```
----
-### Now we just need to query the attributes
-----
-Rememeber that this plist is stored in the user library!
 ```bash
-loggedInUser=`python -c 'from SystemConfiguration import SCDynamicStoreCopyConsoleUser; import sys; username = (SCDynamicStoreCopyConsoleUser(None, None, None) or [None])[0]; username = [username,""][username in [u"loginwindow", None, u""]]; sys.stdout.write(username + "\n");'` && echo "${loggedInUser}"
-
-defaults read "/Users/${nomadUser}/Library/Preferences/com.trusourcelabs.NoMAD.plist" attributeHere
+ldapsearch -Q -Y GSSAPI -h adServer01.macbytes.io -b "DC=macbytes,DC=io" "(sAMAccountName=edward.shorrock)" | grep 'siteCode'
 ```
+---
+### We can even let Jamf Pro fill in variables
+```bash
+#
+# SET VARIABLES FROM JAMF PRO
+#
+ldapServer=${4}
+rootDN=${5}
+searchFilterAttribute=${6}
+searchAccount=${7}
+targetAttribute=${8}
+
+#
+# POPULATE NEEDED VALUES FOR LAUNCHCTL
+#
+loggedInUserPid=$(python -c 'from SystemConfiguration import SCDynamicStoreCopyConsoleUser; username = SCDynamicStoreCopyConsoleUser(None, None, None)[1]; print(username);')
+launchctlCmd=$(python -c 'import platform; from distutils.version import StrictVersion as SV; print("asuser") if SV(platform.mac_ver()[0]) >= SV("10.10") else "bsexec"')
+
+result=$(launchctl "$launchctlCmd" "$loggedInUserPid" ldapsearch -Q -Y GSSAPI -h "${ldapServer}" -b "${rootDN}" "(${searchFilterAttribute}=${searchAccount})" | grep "${targetAttribute}")
+result=$(echo ${result} | cut -d " " -f 2)
+```
+
 
