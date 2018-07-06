@@ -21,6 +21,7 @@
 ```xml
 <base-dn>ou=Users and Groups,dc=macbytes,dc=io</base-dn>
 ```
+Note: You have to specify a fairly base DN here as if you specify one that is a child of a child, you will have issues with syncing and you will get some infinite recursion issues.
 
 ---?color=#1598FF
 ### Set Object Filter:
@@ -28,7 +29,6 @@
 ```xml
 <object-filter>(&#124;(objectCategory=Person)(objectCategory=OrganizationalUnit)(objectCategory=Group))</object-filter>
 ```
-
 ---?color=#FF543F
 ### Configure Sync Attributes
 ```xml
