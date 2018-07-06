@@ -1,6 +1,6 @@
 ---
 ### Pushing the big button!
-
+Note: Who is ready!
 ---
 ### But first lets install the schema
 ----
